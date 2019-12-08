@@ -22,9 +22,9 @@ const request = (options) => {
 
 };
 
-export function getDashboards() {
+export function getDashboards(dashId) {
     return request({
-        url: BASE_URL + '/dashboards.json',
+        url: BASE_URL + `/dashboards/${dashId}`,
         method: 'GET'
     })
 }

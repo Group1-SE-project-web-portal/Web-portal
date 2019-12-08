@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { getDataElements } from '../utils/APIUtils'
 import './NavBar.css'
-export default function NAvBar() {
+export default function NAvBar(props) {
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -14,33 +14,19 @@ export default function NAvBar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <NavLink className="nav-link" to="/">Home <span className="sr-only">(current)</span></NavLink>
+                            <NavLink className="nav-link" to="/dash1">{props.dash1} <span className="sr-only"></span></NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/dashboards/:id">Dashboards</NavLink>
+                            <NavLink className="nav-link" to="/dash2">{props.dash2}</NavLink>
                         </li>
-                        <li className="nav-item dropdown">
-                            <NavLink className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Program Indicators
-                              </NavLink>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <NavLink className="dropdown-item" to="#">Action</NavLink>
-                                <NavLink className="dropdown-item" to="#">Another action</NavLink>
-                                <div className="dropdown-divider"></div>
-                                <NavLink className="dropdown-item" to="#">Something else here</NavLink>
-                            </div>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/dash2">{props.dash3}</NavLink>
                         </li>
-                        <li className="nav-item dropdown">
-                            <NavLink className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Data Elements
-                              </NavLink>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <NavLink className="dropdown-item" to="#">Action</NavLink>
-                                <NavLink className="dropdown-item" to="#">Another action</NavLink>
-                                <div className="dropdown-divider"></div>
-                                <NavLink className="dropdown-item" to="#">Something else here</NavLink>
-                            </div>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/dash2">{props.dash4}</NavLink>
                         </li>
+
+
 
                     </ul>
                     <form className="form-inline my-2 my-lg-0">

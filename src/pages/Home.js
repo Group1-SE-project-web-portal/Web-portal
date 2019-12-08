@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { getOrganisationGroups, getCharts } from '../utils/APIUtils'
+import { getDashboards, getCharts } from '../utils/APIUtils'
 
 export default class Home extends Component {
     constructor(props) {
@@ -8,6 +8,7 @@ export default class Home extends Component {
         this.state = {
             charts: '',
             isLoading: false,
+            dashboard: '',
             dataElements: '',
             organisationUnits: ''
 
@@ -15,24 +16,21 @@ export default class Home extends Component {
     }
     componentDidMount() {
 
-        getCharts().then(data => this.setState({ charts: data.charts, isLoading: true }))
-        console.log(this.state.charts)
+        getCharts().then(data => { this.setState({ charts: data.charts }) })
+            .then(getDashboards("JW7RlN5xafN").then(dash => { this.setState({ dashboard: dash }) }))
+
     }
 
     render() {
+        const { charts, dashboard } = this.state
+        console.log(dashboard)
 
-        let data = []
-        const { isLoading, charts } = this.state
-        if (!charts) {
+        if (!charts || !dashboard) {
             return <div>Loading....</div>
         }
-        data = charts
-
-
-
         return (
             <div>
-                {data[0].displayName}
+                {charts[0].displayName}
             </div>
         )
     }
