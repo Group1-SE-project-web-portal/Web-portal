@@ -14,16 +14,16 @@ export default function NAvBar(props) {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <NavLink className="nav-link" to="/dash1">{props.dash1} <span className="sr-only"></span></NavLink>
+                            <NavLink className="nav-link" to="/">{props.dash1} <span className="sr-only"></span></NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/dash2">{props.dash2}</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/dash2">{props.dash3}</NavLink>
+                            <NavLink className="nav-link" to="/dash3">{props.dash3}</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/dash2">{props.dash4}</NavLink>
+                            <NavLink className="nav-link" to="/dash4">{props.dash4}</NavLink>
                         </li>
 
 
