@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom'
-import Home from './pages/Home'
+import Dash1 from './pages/Dash1'
 import Dashboards from './pages/Dashboards'
 import NavBar from './components/NavBar.js'
 
@@ -17,7 +17,11 @@ function App() {
 
 
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Dash1} />
+        <Route exact path="/dash1" component={Dashboards} />
+        <Route exact path="/dash2" component={Dashboards} />
+        <Route exact path="/dash3" component={Dashboards} />
+        <Route exact path="/dash4" component={Dashboards} />
         <Route exact path="/dashboard" component={Dashboards} />
 
       </Switch>
