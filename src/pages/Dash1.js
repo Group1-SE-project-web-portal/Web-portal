@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { getCharts, getAllDashboards } from '../utils/APIUtils'
 import Charts from '../components/Chart'
+import Dashboards from './Dashboards'
 
 export default class Dash1 extends Component {
     constructor(props) {
@@ -30,8 +31,27 @@ export default class Dash1 extends Component {
         if (!charts || !dashboards) {
             return <div>Loading....</div>
         }
-        const chartsId = charts.map(ids => ids.id)
-        //const chartDashboardItems =    
+
+        const dashboardOneItems = dashboards[0].dashboardItems
+        const itemsIds = []
+
+        for (let i = 0; i < dashboardOneItems.length; i++) {
+            if (dashboardOneItems[i].chart) {
+                itemsIds.push(dashboardOneItems[i].chart)
+            }
+        }
+
+        let requiredCharts = []
+
+        let chartsId = []
+
+        charts.forEach(keys1 => {
+
+            if (itemsIds.find(keys2 => keys2.id === keys1.id)) {
+                requiredCharts.push(keys1)
+            }
+        })
+        console.log(requiredCharts)
         const dataPoints = [
             { x: 0, y: 25 },
             { x: 1, y: 27 },
