@@ -1,16 +1,17 @@
 import { BASE_URL, USERNAME, PASSWORD } from '../constants/Constants'
 
-const request = (options) => {
+const request = async (options) => {
     const headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization': 'Basic ' + btoa(USERNAME + ":" + PASSWORD),
+        'Allow-Cross-Origin-Access': '*'
     })
 
     const defaults = { headers: headers };
     options = Object.assign({}, defaults, options);
 
 
-    return fetch(options.url, options)
+    return await fetch(options.url, options)
         .then(response =>
             response.json().then(json => {
                 if (!response.ok) {
@@ -38,7 +39,14 @@ export function getDataElements() {
 
 export function getCharts() {
     return request({
-        url: BASE_URL + '/charts.json?fields=*&paging=true&pageSize=5',
+        url: BASE_URL + '/charts.json?fields=*&paging=false',
+        method: 'GET'
+    })
+}
+
+export function getAllDashboards() {
+    return request({
+        url: BASE_URL + '/dashboards.json?fields=*&paging=false',
         method: 'GET'
     })
 }

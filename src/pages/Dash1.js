@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { getOneDashboard, getCharts, getAllDashboards } from '../utils/APIUtils'
+import { getCharts, getAllDashboards } from '../utils/APIUtils'
 import Charts from '../components/Chart'
 
-export default class Home extends Component {
+export default class Dash1 extends Component {
     constructor(props) {
         super(props)
 
@@ -21,18 +21,17 @@ export default class Home extends Component {
 
         getCharts().then(data => { this.setState({ charts: data.charts }) })
         getAllDashboards().then(data => { this.setState({ dashboards: data.dashboards }) })
-        //getOneDashboard(this.state.dashId).then(data => { this.setState({ singleDashboard: data }) })
 
     }
 
     render() {
-        const { charts, dashboards, singleDashboard } = this.state
+        const { charts, dashboards } = this.state
 
         if (!charts || !dashboards) {
             return <div>Loading....</div>
         }
-        const chartsId = dashboards.map(ids => ids.id)
-
+        const chartsId = charts.map(ids => ids.id)
+        //const chartDashboardItems =    
         const dataPoints = [
             { x: 0, y: 25 },
             { x: 1, y: 27 },
@@ -50,7 +49,7 @@ export default class Home extends Component {
 
         return (
             <div>
-                <Charts title={dashboards[3].displayName} type={"spline"} data={dataPoints} />
+                <Charts title={dashboards[3].name} type={"spline"} data={dataPoints} />
                 <Charts title={"HIV"} type={"bar"} data={dataPoints} />
                 <Charts title={"IMMUNISATION"} type={"scatter"} data={dataPoints} />
                 <Charts title={"EBOLA"} type={"area"} data={dataPoints} />
