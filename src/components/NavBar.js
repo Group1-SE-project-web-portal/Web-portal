@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { getDataElements } from '../utils/APIUtils'
+import { Button } from 'reactstrap'
 import './NavBar.css'
 export default function NAvBar(props) {
     return (
@@ -14,7 +15,7 @@ export default function NAvBar(props) {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <NavLink className="nav-link" to="/">{props.dash1} <span className="sr-only"></span></NavLink>
+                            <NavLink className="nav-link" to="/"><Button onClick={props.loadDash1}>{props.dash1}</Button> <span className="sr-only"></span></NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/dash2">{props.dash2}</NavLink>
