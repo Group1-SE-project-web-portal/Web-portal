@@ -6,7 +6,10 @@ import Dashboards from './pages/Dashboards'
 import NavBar from './components/NavBar.js'
 import Charts from './components/Chart'
 
-import { getAllDashboards, getCharts } from './utils/APIUtils'
+
+import { getAllDashboards, getCharts, oneChart, getData, request } from './utils/APIUtils'
+import { BASE_URL } from './constants/Constants';
+
 
 
 
@@ -30,6 +33,8 @@ class App extends Component {
 
     getCharts().then(data => { this.setState({ charts: data.charts }) })
     getAllDashboards().then(data => { this.setState({ dashboards: data.dashboards }) })
+    oneChart().then(data => { this.setState({ dashId: data }) })
+
 
   }
 
@@ -37,13 +42,13 @@ class App extends Component {
   render() {
 
 
-    const { charts, dashboards } = this.state
+    const { charts, dashboards, dashId } = this.state
 
     if (!charts || !dashboards) {
       return <div>Loading....</div>
     }
 
-    const dashboardOneItems = dashboards[2].dashboardItems
+    const dashboardOneItems = dashboards[0].dashboardItems
     const itemsIds = []
 
     for (let i = 0; i < dashboardOneItems.length; i++) {
@@ -60,9 +65,31 @@ class App extends Component {
         requiredCharts.push(keys1)
       }
     })
-    console.log(dashboards)
+
+    //prpare chart One
+    const chartOneMetadata = requiredCharts[6];
+
+    const chartOneName = chartOneMetadata.displayName
+    const chartOneType = chartOneMetadata.type.toLowerCase()
+
+    // const dimensionOne = chartOneMetadata.filterDimension;
+
+    // const rows = dashId.rows;
+    // const columns = dashId.metadata;
+
+    // const single = request({
+    //   url: BASE_URL,
+    //   method: 'GET'
+    // }).then(data => JSON.stringify(data))
+    // const value = parseFloat(rows[0][2])
+    // // const value2 = rows[0][2]
+    // const value3 = rows[0][2]
+
+
+    // requiredCharts[0].
+    console.log(chartOneMetadata)
     const dataPoints = [
-      { x: 0, y: 25 },
+      { x: 0, y: 104 },
       { x: 1, y: 27 },
       { x: 2, y: 428 },
       { x: 3, y: 324 },
@@ -78,7 +105,7 @@ class App extends Component {
 
 
     const chartOne = () => {
-      return <Charts type={"spline"} title={"HELLO"} data={dataPoints} />
+      return <Charts type={chartOneType} title={chartOneName} data={dataPoints} />
     }
     const chartTwo = () => {
       return <Charts type={"bar"} title={"hiv fact"} data={dataPoints} />
@@ -86,7 +113,7 @@ class App extends Component {
     return (
       <div className="App" >
 
-        <NavBar dash1={dashboards[3].displayName} dash2={dashboards[4].displayName} dash3={dashboards[5].displyName} dash4={"HIV"} />
+        <NavBar dash1={dashboards[3].displayName} dash2={dashboards[6].displayName} dash3={dashboards[0].displayName} dash4={dashboards[1].displayName} />
         <Switch>
           <Route exact path="/" component={() =>
             <Dash1 >

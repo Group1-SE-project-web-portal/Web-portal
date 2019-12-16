@@ -18,13 +18,13 @@ export default function NAvBar(props) {
                             <NavLink className="nav-link" to="/"><Button onClick={props.loadDash1}>{props.dash1}</Button> <span className="sr-only"></span></NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/dash2">{props.dash2}</NavLink>
+                            <NavLink className="nav-link" to="/dash2"><Button onClick={props.loadDash2}>{props.dash2}</Button></NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/dash3">{props.dash3}</NavLink>
+                            <NavLink className="nav-link" to="/dash3"><Button onClick={props.loadDash3}>{props.dash3}</Button></NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/dash4">{props.dash4}</NavLink>
+                            <NavLink className="nav-link" to="/dash4"><Button onClick={props.loadDash4}>{props.dash4}</Button></NavLink>
                         </li>
 
 

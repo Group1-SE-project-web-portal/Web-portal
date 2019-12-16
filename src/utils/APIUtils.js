@@ -1,6 +1,6 @@
 import { BASE_URL, USERNAME, PASSWORD } from '../constants/Constants'
 
-const request = async (options) => {
+export const request = async (options) => {
     const headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization': 'Basic ' + btoa(USERNAME + ":" + PASSWORD),
@@ -54,6 +54,20 @@ export function getAllDashboards() {
 export function getOrganisationGroups() {
     return request({
         url: BASE_URL + "/organisationUnits.json?fields=displayName, dataSets[id, displayName], programs[id, displayName]&paging=true&pageSize=10",
+        method: "GET"
+    })
+}
+
+export function getData(id1, id2, id3, id4) {
+    return request({
+        url: BASE_URL + `/analytics.json?dimension=dx:${id1};${id2}&dimension=ou:${id3}&dimension=pe:${id4}`,
+        method: 'GET'
+    })
+}
+
+export function oneChart() {
+    return request({
+        url: BASE_URL + '/analytics?dimension=dx:Uvn6LCg7dVU;AUqdhY4mpvp;Q3M7Htpzg1Y&dimension=pe:THIS_YEAR',
         method: "GET"
     })
 }
