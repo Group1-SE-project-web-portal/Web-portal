@@ -13,16 +13,13 @@ class Charts extends Component {
                 text: this.props.title
             },
             axisX: {
-                valueFormatString: "MMM"
+                title: this.props.xTitle
             },
             axisY: {
-                title: "Sales (in USD)",
-                prefix: "$",
+                title: this.props.yTitle,
                 includeZero: false
             },
             data: [{
-                yValueFormatString: "$#,###",
-                xValueFormatString: "MMMM",
                 type: this.props.type,
                 dataPoints: this.props.data
             }]

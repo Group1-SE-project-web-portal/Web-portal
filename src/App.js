@@ -66,11 +66,16 @@ class App extends Component {
       }
     })
 
-    //prpare chart One
+    //prepare chart One
     const chartOneMetadata = requiredCharts[6];
 
     const chartOneName = chartOneMetadata.displayName
     const chartOneType = chartOneMetadata.type.toLowerCase()
+    const orgFilter = chartOneMetadata.series
+    const periodFilter = chartOneMetadata.category
+    const periods = 'LAST_12_MONTHS'
+    const dataDimension = chartOneMetadata.dataDimensionItems[0].dataElement.id
+    const orgUnits = chartOneMetadata.organisationUnits.map(ids => ids.id)
 
     // const dimensionOne = chartOneMetadata.filterDimension;
 
@@ -89,18 +94,18 @@ class App extends Component {
     // requiredCharts[0].
     console.log(chartOneMetadata)
     const dataPoints = [
-      { x: 0, y: 104 },
-      { x: 1, y: 27 },
-      { x: 2, y: 428 },
-      { x: 3, y: 324 },
-      { x: 4, y: 35 },
-      { x: 5, y: 339 },
-      { x: 6, y: 4 },
-      { x: 7, y: 525 },
-      { x: 8, y: 323 },
-      { x: 9, y: 420 },
-      { x: 10, y: 37 },
-      { x: 11, y: 384 }
+      { label: "JAN", y: 104 },
+      { label: "FEB", y: 27 },
+      { label: "MARCH", y: 428 },
+      { label: "APLIR", y: 324 },
+      { label: "MAY", y: 35 },
+      { label: "JUNE", y: 339 },
+      { label: "JULY", y: 4 },
+      { label: "AUGU", y: 525 },
+      { label: "SEP", y: 323 },
+      { label: "OCT", y: 420 },
+      { label: "NOV", y: 37 },
+      { label: "DEC", y: 900 }
     ]
 
 
