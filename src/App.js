@@ -77,6 +77,11 @@ class App extends Component {
     const dataDimension = chartOneMetadata.dataDimensionItems[0].dataElement.id
     const orgUnits = chartOneMetadata.organisationUnits.map(ids => ids.id)
 
+    const dataValues = request({
+      url: BASE_URL + `/analytics.json?dimension=dx:${dataDimension};&dimension=ou:${orgUnits[0]};${orgUnits[1]};${orgUnits[2]};${orgUnits[3]};${orgUnits[4]}&dimension=pe:${periods}`,
+                        method: "GET"
+    }).then(data => { console.log(data) })
+
     // const dimensionOne = chartOneMetadata.filterDimension;
 
     // const rows = dashId.rows;
