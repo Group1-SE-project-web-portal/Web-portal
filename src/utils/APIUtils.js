@@ -4,12 +4,11 @@ export const request = async (options) => {
     const headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization': 'Basic ' + btoa(USERNAME + ":" + PASSWORD),
-        'Allow-Cross-Origin-Access': '*'
+        'Allow-Cross-Origin-Access': 'http://localhost:3000'
     })
 
     const defaults = { headers: headers };
     options = Object.assign({}, defaults, options);
-
 
     return await fetch(options.url, options)
         .then(response =>

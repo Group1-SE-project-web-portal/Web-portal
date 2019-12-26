@@ -31,7 +31,10 @@ class App extends Component {
   }
   componentDidMount() {
 
-    getCharts().then(data => { this.setState({ charts: data.charts }) })
+    getCharts().then(data => { 
+      console.log(data.charts)
+      this.setState({ charts: data.charts }) 
+    })
     getAllDashboards().then(data => { this.setState({ dashboards: data.dashboards }) })
     oneChart().then(data => { this.setState({ dashId: data }) })
 
@@ -47,8 +50,9 @@ class App extends Component {
     if (!charts || !dashboards) {
       return <div>Loading....</div>
     }
+    console.log(dashboards)
 
-    const dashboardOneItems = dashboards[0].dashboardItems
+    const dashboardOneItems = dashboards[2].dashboardItems
     const itemsIds = []
 
     for (let i = 0; i < dashboardOneItems.length; i++) {
@@ -56,18 +60,21 @@ class App extends Component {
         itemsIds.push(dashboardOneItems[i].chart)
       }
     }
+    console.log(dashboardOneItems)
+    console.log(itemsIds)
 
     let requiredCharts = []
 
-    charts.forEach(keys1 => {
+    charts.forEach(chart => {
 
-      if (itemsIds.find(keys2 => keys2.id === keys1.id)) {
-        requiredCharts.push(keys1)
+      if (itemsIds.find(keys2 => keys2.id === chart.id)) {
+        requiredCharts.push(chart)
       }
     })
 
     //prepare chart One
-    const chartOneMetadata = requiredCharts[6];
+    const chartOneMetadata = requiredCharts[0];
+    console.log(chartOneMetadata)
 
     const chartOneName = chartOneMetadata.displayName
     const chartOneType = chartOneMetadata.type.toLowerCase()
@@ -97,7 +104,7 @@ class App extends Component {
 
 
     // requiredCharts[0].
-    console.log(chartOneMetadata)
+    // console.log(chartOneMetadata)
     const dataPoints = [
       { label: "JAN", y: 104 },
       { label: "FEB", y: 27 },
