@@ -1,13 +1,12 @@
-#searchButton{
-    background-color: black;
-    color: white
+#searchButton {
+  color: white;
 }
-.nav-link{
-    margin-left: 8em;
-    background-color: black;
-    border-radius: 45%;
+.nav-link {
+  margin-left: 8em;
+  border-radius: 2px;
+  background-color: rgb(160, 153, 153);
 }
 
-#navbarDropdown{
-    margin-left: 8em
+#navbarDropdown {
+  margin-top: 8em;
 }
