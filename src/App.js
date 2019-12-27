@@ -66,31 +66,30 @@ class App extends Component {
     if (!charts || !dashboards) {
       return <div>Loading....</div>;
     }
-    console.log(dashboards)
+    console.log(dashboards);
 
-    const dashboardOneItems = dashboards[2].dashboardItems
-    const itemsIds = []
+    const dashboardOneItems = dashboards[1].dashboardItems;
+    const itemsIds = [];
 
     for (let i = 0; i < dashboardOneItems.length; i++) {
       if (dashboardOneItems[i].chart) {
         itemsIds.push(dashboardOneItems[i].chart);
       }
     }
-    console.log(dashboardOneItems)
-    console.log(itemsIds)
+    console.log(dashboardOneItems);
+    console.log(itemsIds);
 
     let requiredCharts = [];
 
     charts.forEach(chart => {
-
       if (itemsIds.find(keys2 => keys2.id === chart.id)) {
-        requiredCharts.push(chart)
+        requiredCharts.push(chart);
       }
     });
 
     //prepare chart One
-    const chartOneMetadata = requiredCharts[0];
-    console.log(chartOneMetadata)
+    const chartOneMetadata = requiredCharts[6];
+    console.log(chartOneMetadata);
 
     const chartOneName = chartOneMetadata.displayName;
     const chartOneType = chartOneMetadata.type.toLowerCase();
