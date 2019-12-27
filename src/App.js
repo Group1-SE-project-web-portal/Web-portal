@@ -144,8 +144,19 @@ class App extends Component {
       );
     };
     const chartTwo = () => {
-      return <Charts type={"bar"} title={"hiv fact"} data={dataPoints} />;
+      return <Charts type={"bar"} title={"HIV"} data={dataPoints} />;
     };
+    
+    const chartThree = () => {
+      return <Charts type={"pie"} title={"Maternal Deaths"} data={dataPoints} />; 
+    };
+  
+      const style = {
+        borderRadius: "5px",
+        width:"300px"
+        
+      }
+    
     return (
       <div className="App">
         <NavBar
@@ -157,8 +168,8 @@ class App extends Component {
 
         <Switch>
           <div className={classes.root}>
-            <Grid container spacing={3}>
-              <Grid item xs>
+            <Grid container spacing={3} >
+              <Grid item xs style={style}>
                 <Paper className={classes.paper}>
                   {" "}
                   <Route
@@ -168,7 +179,19 @@ class App extends Component {
                   />
                 </Paper>
               </Grid>
-              <Grid item xs>
+              <Grid item xs style={style} >
+                <Paper className={classes.paper}>
+                  {" "}
+                  <Route
+                    exact
+                    path="/"
+                    component={() => <Dash1>{chartThree()}</Dash1>}
+                  />
+                </Paper>
+              </Grid>
+            </Grid>
+            <Grid container spacing={3} >
+              <Grid item xs style={style} className="grids">
                 <Paper className={classes.paper}>
                   {" "}
                   <Route
@@ -178,6 +201,7 @@ class App extends Component {
                   />
                 </Paper>
               </Grid>
+         
             </Grid>
           </div>
           <Route exact path="/dash2" component={Dashboards} />

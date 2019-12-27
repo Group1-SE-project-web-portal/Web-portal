@@ -3,11 +3,16 @@ import { NavLink } from "react-router-dom";
 import { getDataElements } from "../utils/APIUtils";
 import { Button } from "reactstrap";
 import "./NavBar.css";
+import IconButton from "@material-ui/core/IconButton"
+import dhs2logo from "../components/dhis2-icon-rgb-positive.png"
 export default function NAvBar(props) {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <NavLink className="navbar-brand" to="#">
+          <IconButton>
+            <img src ={dhs2logo} alt="Home" width="35" height="35"/>
+          </IconButton>
           WEB PORTAL
         </NavLink>
         <button

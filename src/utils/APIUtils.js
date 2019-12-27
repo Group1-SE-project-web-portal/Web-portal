@@ -4,7 +4,7 @@ export const request = async (options) => {
     const headers = new Headers({
         'Content-Type': 'application/json',
         'Authorization': 'Basic ' + btoa(USERNAME + ":" + PASSWORD),
-        'Allow-Cross-Origin-Access': 'http://localhost:3000'
+        'Allow-Cross-Origin-Access': '*'
     })
 
     const defaults = { headers: headers };
