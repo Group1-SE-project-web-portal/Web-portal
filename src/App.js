@@ -650,14 +650,14 @@ class App extends Component {
             <Dash1 >
               <Container>
                 <Row xs='2'>
-                  <Col>{this.chartOne()}</Col>
-                  <Col>{this.chartTwo()}</Col>
+                  <Col><div className='card' style={{ width: '35rem' }}>{this.chartOne()}</div></Col>
+                <Col><div className='card' style={{width: '30rem'}}>{this.chartTwo()}</div></Col>
                 </Row>
                 <Row xs='2'>
-                  <Col>{this.chartThree()}</Col>
+                  <Col><div className='card' style={{width: '40rem'}}>{this.chartThree()}</div></Col>
                 </Row>
-             
-              </Container>
+      
+              </Container>  
 
             </Dash1>} />
           <Route exact path="/dash2" component={Dashboards} />
