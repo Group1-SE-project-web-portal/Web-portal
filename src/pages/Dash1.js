@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+<<<<<<< HEAD
 import {
   getOneDashboard,
   getCharts,
@@ -121,8 +122,21 @@ class Home extends Component {
             </Grid>
           </Grid>
         </div>
+=======
+
+class Dash1 extends Component {
+  render(props) {
+    return (
+      <div>
+        <div>{this.props.children}</div>
+>>>>>>> master
       </div>
     );
   }
 }
+<<<<<<< HEAD
 export default withStyles(styles)(Home);
+=======
+
+export default Dash1;
+>>>>>>> master
