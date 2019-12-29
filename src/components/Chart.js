@@ -19,10 +19,7 @@ class Charts extends Component {
                 title: this.props.yTitle,
                 includeZero: false
             },
-            data: [{
-                type: this.props.type,
-                dataPoints: this.props.data
-            }]
+            data: this.props.data
         }
         return (
             <div>

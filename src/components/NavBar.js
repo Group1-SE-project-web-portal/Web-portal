@@ -26,21 +26,13 @@ export default function NAvBar(props) {
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/dash4"><Button onClick={props.loadDash4}>{props.dash4}</Button></NavLink>
                         </li>
-
-
-
                     </ul>
                     <form className="form-inline my-2 my-lg-0">
                         <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success my-2 my-sm-0" id="searchButton" type="submit" onClick={load}>Search</button>
+                        <button className="btn btn-outline-success my-2 my-sm-0" id="searchButton" type="submit" >Search</button>
                     </form>
                 </div>
             </nav>
         </div >
     )
-}
-
-const load = (event) => {
-    event.preventDefault()
-    const data = getDataElements()
 }
