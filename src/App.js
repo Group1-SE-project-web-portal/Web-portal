@@ -6,6 +6,7 @@ import Dashboards from './pages/Dashboards'
 import NavBar from './components/NavBar.js'
 import Charts from './components/Chart'
 import $ from 'jquery';
+import { Row, Container, Col } from 'reactstrap'
 
 
 import { getAllDashboards, getCharts, getOrganisationUnits } from './utils/APIUtils'
@@ -41,7 +42,7 @@ class App extends Component {
     if (!charts || !dashboards || !organisationUnits) {
       return <div>Loading....</div>
     }
-    
+
 
     const dashboardOneItems = dashboards[0].dashboardItems;
     const itemsIds = [];
@@ -62,7 +63,7 @@ class App extends Component {
 
     //prepare chart One
     const chartOneMetadata = requiredCharts[6];
-    
+
     const chartOneName = chartOneMetadata.displayName
     const periods = 'LAST_12_MONTHS'
     const dataDimension = chartOneMetadata.dataDimensionItems[0].dataElement.id
@@ -273,7 +274,7 @@ class App extends Component {
   }
 
 
-  
+
   //create chart one
   chartTwo = () => {
     const { charts, dashboards, organisationUnits } = this.state
@@ -281,7 +282,7 @@ class App extends Component {
     if (!charts || !dashboards || !organisationUnits) {
       return <div>Loading....</div>
     }
-    
+
 
     const dashboardOneItems = dashboards[0].dashboardItems;
     const itemsIds = [];
@@ -300,10 +301,10 @@ class App extends Component {
       }
     });
 
-    
+
     //prepare chart One
     const chartTwoMetadata = requiredCharts[7];
-    
+
     const chartTwoName = chartTwoMetadata.displayName
     const periods = 'LAST_12_MONTHS'
     const dataDimension = chartTwoMetadata.dataDimensionItems[0].indicator.id
@@ -321,9 +322,9 @@ class App extends Component {
       }
     }).responseJSON;
 
-    
+
     const orgIds = dataValues.metaData.dimensions.ou
-   
+
 
     // //get org display names
     const OrgUnitsDispNames = []
@@ -334,7 +335,7 @@ class App extends Component {
         }
       })
     })
-    
+
     // // //get actaull data
     const actualData = dataValues.rows
 
@@ -347,7 +348,7 @@ class App extends Component {
 
     let id = [], value = [], period = []
 
-    
+
 
     for (let i = 0; i < actualData.length; i++) {
 
@@ -408,7 +409,7 @@ class App extends Component {
     }
     orgData.push({ id4, value4, period4 })
 
-    console.log(orgData)
+
     // //prepare chart one data
     const dataPoints = [{
       type: "bar",
@@ -518,6 +519,121 @@ class App extends Component {
     return <Charts type={"bar"} title={chartTwoName} data={dataPoints} />
   }
 
+
+
+  //create chart one
+  chartThree = () => {
+    const { charts, dashboards, organisationUnits } = this.state
+
+    if (!charts || !dashboards || !organisationUnits) {
+      return <div>Loading....</div>
+    }
+
+
+    const dashboardOneItems = dashboards[0].dashboardItems;
+    const itemsIds = [];
+
+    for (let i = 0; i < dashboardOneItems.length; i++) {
+      if (dashboardOneItems[i].chart) {
+        itemsIds.push(dashboardOneItems[i].chart);
+      }
+    }
+
+    let requiredCharts = [];
+
+    charts.forEach(chart => {
+      if (itemsIds.find(keys2 => keys2.id === chart.id)) {
+        requiredCharts.push(chart);
+      }
+    });
+
+    //prepare chart three
+    const chartThreeMetadata = requiredCharts[8];
+
+    console.log(chartThreeMetadata)
+
+    const chartThreeName = chartThreeMetadata.displayName
+    const periods = 'LAST_12_MONTHS'
+    const dataDimension = chartThreeMetadata.dataDimensionItems[0].dataElement.id
+    const orgUnits = chartThreeMetadata.organisationUnits.map(ids => ids.id)
+
+    // //get values
+    var dataValues = $.ajax({
+      url: BASE_URL + `/analytics.json?dimension=dx:${dataDimension};&dimension=ou:${orgUnits[0]}&dimension=pe:${periods}`,
+      dataType: "json",
+      headers: { "Authorization": "Basic " + btoa(USERNAME + ":" + PASSWORD) },
+      success: function (data) { },
+      async: false,
+      error: function (err) {
+        console.log(err);
+      }
+    }).responseJSON;
+
+
+    const orgIds = dataValues.metaData.dimensions.ou
+
+
+    // // //get org display names
+    const OrgUnitsDispNames = []
+    organisationUnits.forEach(org => {
+      orgIds.forEach(id => {
+        if (org.id === id) {
+          OrgUnitsDispNames.push(org.displayName)
+        }
+      })
+    })
+
+    // // // //get actaull data
+    const actualData = dataValues.rows
+
+    //create an array of objects that stores the values in order
+    let orgData = [{
+      id: '',
+      values: [],
+      periods: []
+    }]
+
+    let id = [], value = [], period = []
+
+
+
+    for (let i = 0; i < actualData.length; i++) {
+
+      if (actualData[i][1] === orgIds[0]) {
+        id = OrgUnitsDispNames[0]
+        value.push(parseFloat(actualData[i][3]))
+        period.push(actualData[i][2])
+
+      }
+
+    }
+    orgData.push({ id, value, period })
+
+    //prepare chart one data
+    const dataPoints = [{
+      type: "stackedColumn",
+      showInLegend: true,
+      legendText: orgData[1].id,
+      dataPoints: [
+        { y: orgData[1].value[0], label: "September 2019" },
+        { y: orgData[1].value[1], label: "January 2019" },
+        { y: orgData[1].value[2], label: "July 2019" },
+        { y: orgData[1].value[3], label: "June2019" },
+        { y: orgData[1].value[4], label: "October 2019" },
+        { y: orgData[1].value[5], label: "November 2019" },
+        { y: orgData[1].value[6], label: "December 2018" },
+        { y: orgData[1].value[7], label: "October 2019" },
+        { y: orgData[1].value[8], label: "April 2019" },
+        { y: orgData[1].value[9], label: "March 2019" },
+        { y: orgData[1].value[10], label: "February 2019" },
+        { y: orgData[1].value[11], label: "January 2019" }
+
+      ]
+    }]
+
+    return <Charts title={chartThreeName} data={dataPoints} />
+  }
+
   render() {
     const { charts, dashboards, organisationUnits } = this.state
 
@@ -528,12 +644,21 @@ class App extends Component {
     return (
 
       <div className="App" >
-        <NavBar dash1={dashboards[0].displayName} dash2={dashboards[1].displayName} dash3={dashboards[2].displayName} dash4={dashboards[3].displayName}/>
+        <NavBar dash1={dashboards[0].displayName} dash2={dashboards[1].displayName} dash3={dashboards[2].displayName} dash4={dashboards[3].displayName} />
         <Switch>
           <Route exact path="/" component={() =>
             <Dash1 >
-              {this.chartOne()}
-              {this.chartTwo()}
+              <Container>
+                <Row xs='2'>
+                  <Col>{this.chartOne()}</Col>
+                  <Col>{this.chartTwo()}</Col>
+                </Row>
+                <Row xs='2'>
+                  <Col>{this.chartThree()}</Col>
+                </Row>
+             
+              </Container>
+
             </Dash1>} />
           <Route exact path="/dash2" component={Dashboards} />
           <Route exact path="/dash3" component={Dashboards} />
