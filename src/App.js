@@ -5,10 +5,12 @@ import Dash1 from './pages/Dash1'
 import Dashboards from './pages/Dashboards'
 import NavBar from './components/NavBar.js'
 import Charts from './components/Chart'
+import $ from 'jquery';
 
 
-import { getAllDashboards, getCharts, oneChart, getData, request } from './utils/APIUtils'
-import { BASE_URL } from './constants/Constants';
+import { getAllDashboards, getCharts, oneChart, getData, request, getOrganisationUnits } from './utils/APIUtils'
+import { BASE_URL, USERNAME, PASSWORD } from './constants/Constants';
+import { promised } from 'q';
 
 
 
@@ -33,7 +35,7 @@ class App extends Component {
 
     getCharts().then(data => { this.setState({ charts: data.charts }) })
     getAllDashboards().then(data => { this.setState({ dashboards: data.dashboards }) })
-    oneChart().then(data => { this.setState({ dashId: data }) })
+    getOrganisationUnits().then(data => { this.setState({ organisationUnits: data.organisationUnits }) })
 
 
   }
@@ -42,9 +44,9 @@ class App extends Component {
   render() {
 
 
-    const { charts, dashboards, dashId } = this.state
+    const { charts, dashboards, organisationUnits } = this.state
 
-    if (!charts || !dashboards) {
+    if (!charts || !dashboards || !organisationUnits) {
       return <div>Loading....</div>
     }
 
@@ -77,11 +79,81 @@ class App extends Component {
     const dataDimension = chartOneMetadata.dataDimensionItems[0].dataElement.id
     const orgUnits = chartOneMetadata.organisationUnits.map(ids => ids.id)
 
-    const dataValues = request({
+    var dataValues = $.ajax({
       url: BASE_URL + `/analytics.json?dimension=dx:${dataDimension};&dimension=ou:${orgUnits[0]};${orgUnits[1]};${orgUnits[2]};${orgUnits[3]};${orgUnits[4]}&dimension=pe:${periods}`,
-                        method: "GET"
-    }).then(data => { console.log(data) })
+      dataType: "json",
+      headers: { "Authorization": "Basic " + btoa(USERNAME + ":" + PASSWORD) },
+      success: function (data) { },
+      async: false,
+      error: function (err) {
+        console.log(err);
+      }
+    }).responseJSON;
 
+    const orgIds = dataValues.metaData.dimensions.ou
+
+    const OrgUnitsDispNames = []
+    organisationUnits.forEach(org => {
+      orgIds.forEach(id => {
+        if (org.id === id) {
+          OrgUnitsDispNames.push(org.displayName)
+        }
+      })
+    })
+
+    const periodNames = dataValues.metaData.items
+
+    const actualData = dataValues.rows
+
+    let orgData = [{
+      id: [],
+      values: [],
+      periods: []
+    }]
+    const orgData2 = [{
+      id: [],
+      values: [],
+      periods: []
+    }]
+
+    for (let i = 0; i < actualData.length; i++) {
+      if (actualData[i][1] === orgIds[0]) {
+        orgData[0].id.push(orgIds[0] )
+        orgData[0].values.push(parseFloat(actualData[i][3]))
+        orgData[0].periods.push(actualData[i][2])
+      }
+
+    }
+
+    // for (let i = 0; i < actualData.length; i++) {
+    //   if (actualData[i][1] === orgIds[3]) {
+    //    // orgData[1].id.push(orgIds[1])
+    //     orgData[1].values.push(parseFloat(actualData[i][3]))
+    //     orgData[1].periods.push(actualData[i][2])
+    //   }
+    // }
+    //for (let i = 0; i < actualData.length; i++) {
+    //   if (actualData[i][1] === orgIds[3]) {
+    //     orgData[3].id = orgIds[3]
+    //     orgData[3].values.push(parseFloat(actualData[i][3]))
+    //     orgData[3].periods.push(actualData[i][2])
+    //   }
+
+    // }
+
+    // for (let i = 0; i < actualData.length; i++) {
+    //   if (actualData[i][1] === orgIds[4]) {
+    //     orgData[4].id = orgIds[0]
+    //     orgData[4].values.push(parseFloat(actualData[i][3]))
+    //     orgData[4].periods.push(actualData[i][2])
+    //   }
+
+    // }
+
+    console.log(orgData)
+
+
+    //console.log(actualData)
     // const dimensionOne = chartOneMetadata.filterDimension;
 
     // const rows = dashId.rows;
@@ -97,7 +169,7 @@ class App extends Component {
 
 
     // requiredCharts[0].
-    console.log(chartOneMetadata)
+    //console.log(actualData)
     const dataPoints = [
       { label: "JAN", y: 104 },
       { label: "FEB", y: 27 },

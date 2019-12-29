@@ -51,9 +51,9 @@ export function getAllDashboards() {
     })
 }
 
-export function getOrganisationGroups() {
+export function getOrganisationUnits() {
     return request({
-        url: BASE_URL + "/organisationUnits.json?fields=displayName, dataSets[id, displayName], programs[id, displayName]&paging=true&pageSize=10",
+        url: BASE_URL + "/organisationUnits.json?fields=displayName, id&paging=false",
         method: "GET"
     })
 }
