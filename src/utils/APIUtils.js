@@ -10,7 +10,6 @@ export const request = async (options) => {
     const defaults = { headers: headers };
     options = Object.assign({}, defaults, options);
 
-
     return await fetch(options.url, options)
         .then(response =>
             response.json().then(json => {
