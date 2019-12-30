@@ -272,6 +272,157 @@ class App extends Component {
     return <Charts type={"bar"} title={chartOneName} data={dataPoints} />
   }
 
+  //Preparing dashboard two
+   //create chart one
+      dashTwoChartOne = () => {
+     const { charts, dashboards, organisationUnits } = this.state
+
+     if (!charts || !dashboards || !organisationUnits) {
+       return <div>Loading....</div>
+    }
+    
+    const dashboardTwoItems = dashboards[2].dashboardItems
+     console.log(dashboardTwoItems)
+      const dashTwoItemsIds = [];
+
+     for (let i = 0; i < dashboardTwoItems.length; i++) {
+       if (dashboardTwoItems[i].chart) {
+        dashTwoItemsIds.push(dashboardTwoItems[i].chart);
+     }
+   }
+   console.log(dashTwoItemsIds)
+
+   let dashTwoRequiredCharts = [];
+
+     charts.forEach(chart => {
+       if (dashTwoItemsIds.find(keys2 => keys2.id === chart.id)) {
+         dashTwoRequiredCharts.push(chart);
+       }
+     });
+     console.log(dashTwoRequiredCharts)
+
+     //prepare chart One for dashboard Two
+     const dashTwoChartOneMetadata = dashTwoRequiredCharts[1];
+      console.log(dashTwoChartOneMetadata)
+    
+     const dash2ChartOneName = dashTwoChartOneMetadata.displayName
+     console.log(dash2ChartOneName)
+     const periods = 'THIS_YEAR'
+    // console.log(periods)
+     const dataTwoDimension1 = dashTwoChartOneMetadata.dataDimensionItems[0].indicator.id
+     const dataTwoDimension2 = dashTwoChartOneMetadata.dataDimensionItems[1].indicator.id
+     //console.log(dataTwoDimension2)
+     //console.log(dataTwoDimension1)
+
+     const orgUnits = dashTwoChartOneMetadata.organisationUnits.map(ids => ids.id)
+      console.log(orgUnits)
+    //get values
+     var dataValues2 = $.ajax({
+       url: BASE_URL + `/analytics.json?dimension=dx:${dataTwoDimension1};${dataTwoDimension2};&dimension=ou:${orgUnits[0]};${orgUnits[1]};${orgUnits[2]};${orgUnits[3]};${orgUnits[4]}&dimension=pe:${periods}`,
+      dataType: "json",
+      headers: { "Authorization": "Basic " + btoa(USERNAME + ":" + PASSWORD) },
+     success: function (data) { },
+     async: false,
+      error: function (err) {
+       console.log(err);
+     }
+   }).responseJSON;
+
+     const orgIds = dataValues2.metaData.dimensions.ou
+     console.log(orgIds)
+
+//     //get org display names
+     const OrgUnitsDispNames2 = []
+     organisationUnits.forEach(org => {
+      orgIds.forEach(id => {
+        if (org.id === id) {
+          OrgUnitsDispNames2.push(org.displayName)
+        }
+      })
+         })
+         console.log(OrgUnitsDispNames2)
+
+//     //get actual data
+    const actualData2 = dataValues2.rows
+
+    //create an array of objects that stores the values in order
+    let orgData2 = [{
+       id: '',
+      values: [],
+      periods: []
+    }]
+
+     let id2 = [], value2 = [], period2 = []
+
+     for (let i = 0; i < actualData2.length; i++) {
+
+       if (actualData2[i][1] === orgIds[0]) {
+            id2 = OrgUnitsDispNames2[0]
+         value2.push(parseFloat(actualData2[i][3]))
+         period2.push(actualData2[i][2])
+
+      }
+
+     }
+     console.log(id2)
+     console.log(value2)
+     console.log(period2)
+       orgData2.push({ id2, value2, period2 })
+////////////////////////////////////////////////////////////
+      let id1 = [], value1 = [], period1 = []
+
+      for (let i = 0; i < actualData2.length; i++) {
+       if (actualData2[i][1] === orgIds[1]) {
+         id1 = OrgUnitsDispNames2[1]
+         value1.push(parseFloat(actualData2[i][3]))
+         period1.push(actualData2[i][2])
+      }
+    }
+     orgData2.push({ id1, value1, period1 })
+     console.log(orgData2)
+
+
+     let id3 = [], value3 = [], period3 = []
+
+     for (let i = 0; i < actualData2.length; i++) {
+      if (actualData2[i][1] === orgIds[2]) {
+         id3 = OrgUnitsDispNames2[3]
+         value3.push(parseFloat(actualData2[i][3]))
+         period3.push(actualData2[i][2])
+      }
+     }
+     orgData2.push({ id3, value3, period3 })
+     console.log(orgData2)
+
+
+     let id4 = [], value4 = [], period4 = []
+
+     for (let i = 0; i < actualData2.length; i++) {
+      if (actualData2[i][1] === orgIds[3]) {
+         id4 = OrgUnitsDispNames2[2]
+         value4.push(parseFloat(actualData2[i][3]))
+        period4.push(actualData2[i][2])
+       }
+     }
+     orgData2.push({ id4, value4, period4 })
+     console.log(orgData2)
+
+
+    let id5 = [], value5 = [], period5 = []
+
+    for (let i = 0; i < actualData2.length; i++) {
+      if (actualData2[i][1] === orgIds[4]) {
+         id5 = OrgUnitsDispNames2[4]
+        value5.push(parseFloat(actualData2[i][3]))
+        period5.push(actualData2[i][2])
+      }
+    }
+     orgData2.push({ id5, value5, period5 })
+     console.log(orgData2)
+
+
+    return <Charts type={"bar"} title={dash2ChartOneName} data={dataPoints2} />
+   }
 
   render() {
     const { charts, dashboards, organisationUnits } = this.state
@@ -283,19 +434,22 @@ class App extends Component {
     return (
 
       <div className="App" >
-        <NavBar dash1={dashboards[0].displayName} dash2={dashboards[1].displayName} dash3={dashboards[2].displayName} dash4={dashboards[3].displayName}/>
+        <NavBar dash2={dashboards[0].displayName} dash2={dashboards[2].displayName} dash3={dashboards[2].displayName} dash4={dashboards[3].displayName}/>
         <Switch>
           <Route exact path="/" component={() =>
             <Dash1 >
               {this.chartOne()}
             </Dash1>} />
-          <Route exact path="/dash2" component={Dashboards} />
+            <Route exact path="/dash2" component={() =>
+            <Dash1 >
+              {this.dashTwoChartOne()}
+            </Dash1>} />
           <Route exact path="/dash3" component={Dashboards} />
           <Route exact path="/dash4" component={Dashboards} />
         </Switch>
       </div>
     );
-  }
-}
+          
+}}
 
 export default App;
